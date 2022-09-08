@@ -13,8 +13,8 @@ import MainPetrechenko from "../Petrechenko/mainPetrechenko";
 function App() {
 
   return (
-    // <Nepomnyashiy/>
-    <MainPetrechenko/>
+    <Nepomnyashiy/>
+    // <MainPetrechenko/>
   )
 
 }
