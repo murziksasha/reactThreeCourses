@@ -25,30 +25,38 @@ class WhoAmI extends Component {
   state = {
     years: 27,
     plus: "+++",
-    minus: "---"
+    minus: "---",
+    position: '',
   }
 
-  nextYear = () => {
-    this.setState(state => ({years: state.years + 1}));
+  changeYear = (num) => {
+    this.setState(state => ({years: state.years + num}));
   }
 
-  prevYear = () => {
-    this.setState(state => ({years: state.years - 1}));
+  changeInput = (e) => {
+    this.setState({position: e.target.value});
   }
 
   render() {
+    const {name, surname} = this.props;
+    const {years, position, plus, minus} = this.state;
     return (
       <div style={this._style}>
-      <h2>my name is {this.props.name}, surname is {this.props.surname}</h2>
-      <p >age is <span style={this._spanStyle}>{this.state.years}</span></p>
+      <h2>my name is {name}, surname is {surname}, position is {position}</h2>
+      <p >age is <span style={this._spanStyle}>{years}</span></p>
       <button className='btn btn-success' type='button'
-      onClick={() => this.nextYear(+1)}
-      >{this.state.plus}</button>
+      onClick={() => this.changeYear(+1)}
+      >{plus}</button>
       <button className='btn btn-primary' type='button'
-      onClick={() => this.prevYear()}
-      >{this.state.minus}</button>
+      onClick={() => this.changeYear(-1)}
+      >{minus}</button>
       
       <a href="https://properservice.com.ua">proper service</a>
+
+      <form>
+        <span>enter your position</span>
+        <input type="text" onChange={(e)=>this.changeInput(e)} />
+      </form>
     </div>
     )
   }
@@ -57,9 +65,9 @@ class WhoAmI extends Component {
 function App() {
   return (
     <div className="app">
-      <WhoAmI name = 'Sasha' surname = 'Grygoriev'/>
-      <WhoAmI name = 'Petya' surname = 'Petrov'/>
-        {/* <AppInfo />
+      {/* <WhoAmI name = 'Sasha' surname = 'Grygoriev'/>
+      <WhoAmI name = 'Petya' surname = 'Petrov'/> */}
+        <AppInfo />
 
         <div className="search-panel">
             <SearchPanel/>
@@ -67,7 +75,7 @@ function App() {
         </div>
         
         <EmployeesList data={data}/>
-        <EmployeesAddForm/> */}
+        <EmployeesAddForm/>
     </div>
   );
 }
