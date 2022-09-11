@@ -1,7 +1,8 @@
 import { Component } from 'react';
 
 import './mainNepomnyashiy.css';
-import Book from "./book";
+
+import Posts from './components/Posts';
 
 class Nepomnyashiy extends Component{
    cssStyle = {
@@ -9,36 +10,29 @@ class Nepomnyashiy extends Component{
     marginLeft: '20px'
   }
 
+  state = {
+    posts: [
+      {id: 'abc1', name: 'JS Basics'},
+      {id: 'abc2', name: 'JS Advanced'},
+      {id: 'abc3', name: 'React JS'},
+    ],
+  }
 
-    state = {
-      count : 10,
-      someKey: false
-    }
-  
+  handleSomething = () => {
+    console.log('App.jsx setState update');
+  }
 
-  handleClick = (numb) => {
-    // this.setState({
-    //   count: this.state.count + numb
-    // })
-    this.setState((prevState) => ({count: prevState.count + numb}));
-
+  removePost = (id) => {
+    this.setState({posts: this.state.posts.filter(post => post.id !== id)})
   }
 
 
   render() {
     return(
-      <div>
-        <span>{this.state.count}</span>
-        <button 
-        style={this.cssStyle}
-        onClick={()=>this.handleClick(1)}>
-          +</button>
-          <button 
-        style={this.cssStyle}
-        onClick={()=>this.handleClick(-1)}>-</button>
-      <Book name = "JS for Beginners" year = "2020" price= "1000"/>
-      <Book name = "React for Beginners" year = "2021" price= "1200"/>
-      <Book name = "Vue for Beginners" year = "2022" price= "1500"/>
+    <div>
+      <Posts posts = {this.state.posts} update ={this.handleSomething}
+      removePost = {this.removePost}
+      />
     </div>
     )
 
