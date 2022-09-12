@@ -14,11 +14,11 @@ class EmployeesListItem extends Component {
         switch(paramOfState){
             case 'increase':
                 this.setState(({increase})=>({increase: !increase}));
-                break;
+                return;
                
             case 'like':
                 this.setState(({like}) => ({like: !like}));
-                break;
+                return;
                 
         }
 
