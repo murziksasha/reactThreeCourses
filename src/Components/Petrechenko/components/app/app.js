@@ -1,83 +1,96 @@
-import {Component} from 'react';
+import { Component } from "react";
 
-import AppInfo from '../app-info/app-info';
-import SearchPanel from '../search-panel/search-panel';
-import AppFilter from '../app-filter/app-filter';
-import EmployeesList from '../employees-list/employees-list';
-import EmployeesAddForm from '../employees-add-form/employees-add-form';
+import AppInfo from "../app-info/app-info";
+import SearchPanel from "../search-panel/search-panel";
+import AppFilter from "../app-filter/app-filter";
+import EmployeesList from "../employees-list/employees-list";
+import EmployeesAddForm from "../employees-add-form/employees-add-form";
 import data from "../../data/dataEmployees";
 
+import "./app.css";
 
-import './app.css';
+class App extends Component {
+  
+  _maxId = 'abc';
+  _maxIdNum = 5;
 
-class WhoAmI extends Component {
-
-  _style = {
-    marginTop : '25px',
-    color: 'blue'
-  }
-
-  _spanStyle = {
-    fontSize: '30px',
-    color: 'red'
-  }
 
   state = {
-    years: 27,
-    plus: "+++",
-    minus: "---",
-    position: '',
+    data: [...data],
+  };
+
+
+  deleteItem = (id) => {
+    this.setState(({ data }) => {
+      return {
+        data: data.filter(item => item.id !== id),
+      }
+    });
+  };
+
+  addItem = (name, salary) => {
+    const newItem = {
+      name,
+      salary,
+      increase: false,
+      rise: false,
+      id: this._maxIdNum++ + this._maxId,
+    }
+
+    this.setState(({data}) => {
+      const newArray = [...data, newItem];
+      return {
+        data: newArray,
+      }
+    })
   }
 
-  changeYear = (num) => {
-    this.setState(state => ({years: state.years + num}));
+  onToggleProp = (id, prop) => {
+    // this.setState(({data}) => {
+    //   const index = data.findIndex(elem => elem.id === id);
+    //   const old = data[index];
+    //   const newItem = {...old, increase: !old.increase};
+    //   const newArr = [...data.slice(0, index), newItem, ...data.slice(index+1)];
+
+    //   return {
+    //     data: newArr
+    //   }
+    // })
+    //         ------------------  Next Variant --------------
+    this.setState(({data}) => ({
+      data: data.map(item => {
+        if(item.id === id) {
+          return {...item, [prop]: !item[prop]}
+        }
+        return item;
+      })
+    }));
   }
 
-  changeInput = (e) => {
-    this.setState({position: e.target.value});
-  }
 
   render() {
-    const {name, surname} = this.props;
-    const {years, position, plus, minus} = this.state;
+  const counterRise = this.state.data.filter(item => item.increase).length;
     return (
-      <div style={this._style}>
-      <h2>my name is {name}, surname is {surname}, position is {position}</h2>
-      <p >age is <span style={this._spanStyle}>{years}</span></p>
-      <button className='btn btn-success' type='button'
-      onClick={() => this.changeYear(+1)}
-      >{plus}</button>
-      <button className='btn btn-primary' type='button'
-      onClick={() => this.changeYear(-1)}
-      >{minus}</button>
-      
-      <a href="https://properservice.com.ua">proper service</a>
-
-      <form>
-        <span>enter your position</span>
-        <input type="text" onChange={(e)=>this.changeInput(e)} />
-      </form>
-    </div>
-    )
-  }
-}
-
-function App() {
-  return (
-    <div className="app">
-      {/* <WhoAmI name = 'Sasha' surname = 'Grygoriev'/>
-      <WhoAmI name = 'Petya' surname = 'Petrov'/> */}
-        <AppInfo />
+      <div className="app">
+        <AppInfo countWorkers = {this.state.data.length}
+                counterRise = {counterRise}/>
 
         <div className="search-panel">
-            <SearchPanel/>
-            <AppFilter/>
+          <SearchPanel />
+          <AppFilter />
         </div>
-        
-        <EmployeesList data={data}/>
-        <EmployeesAddForm/>
-    </div>
-  );
+
+        <EmployeesList
+          data={this.state.data}
+          onDelete={this.deleteItem}
+          onToggleProp = {this.onToggleProp}
+        />
+        <EmployeesAddForm 
+                  onAdd = {this.addItem}
+                  />
+      </div>
+    );
+  }
 }
 
 export default App;
