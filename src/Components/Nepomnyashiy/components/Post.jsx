@@ -1,9 +1,9 @@
 
 
 function Post (props) {
-  const {id, name, removePost, update} = props;
+  const {id, name, removePost} = props;
 
-  return <h2 onClick={update} >
+  return <h2>
     <button onClick ={()=> removePost(id)}>DELETE</button>
     {name}</h2>
 }

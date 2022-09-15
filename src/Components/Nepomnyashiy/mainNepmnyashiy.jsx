@@ -4,6 +4,8 @@ import './mainNepomnyashiy.css';
 
 import Posts from './components/Posts';
 
+import Form from './components/Form/Form';
+
 class Nepomnyashiy extends Component{
    cssStyle = {
     color: 'red',
@@ -18,21 +20,20 @@ class Nepomnyashiy extends Component{
     ],
   }
 
-  handleSomething = () => {
-    console.log('App.jsx setState update');
-  }
-
   removePost = (id) => {
     this.setState({posts: this.state.posts.filter(post => post.id !== id)})
   }
 
 
   render() {
+    const {posts} = this.state;
+
     return(
     <div>
-      <Posts posts = {this.state.posts} update ={this.handleSomething}
+      <Form/>
+      {/* <Posts posts = {posts}
       removePost = {this.removePost}
-      />
+      /> */}
     </div>
     )
 

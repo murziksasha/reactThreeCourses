@@ -19,8 +19,8 @@ function App() {
 
   return (
 
-    // <Nepomnyashiy/>
-    <MainPetrechenko/>
+    <Nepomnyashiy/>
+    // <MainPetrechenko/>
     // <YuriyBura/>
   )
 
