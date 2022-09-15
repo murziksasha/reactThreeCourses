@@ -6,6 +6,8 @@ import Posts from './components/Posts';
 
 import Form from './components/Form/Form';
 
+import MyTaskForm from './components/myTaskForm/MyTaskForm';
+
 class Nepomnyashiy extends Component{
    cssStyle = {
     color: 'red',
@@ -30,6 +32,7 @@ class Nepomnyashiy extends Component{
 
     return(
     <div>
+      {/* <MyTaskForm/> */}
       <Form/>
       {/* <Posts posts = {posts}
       removePost = {this.removePost}

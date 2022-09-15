@@ -1,22 +1,37 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 import './Form.css';
 
 
 class Form extends Component {
-  
-  state = {
-    firstname: '',
-    email: '',
-    message: '',
-    select: '',
-    subscription: false,
-    gender: '',
 
+  constructor() {
+    super();
+    this.state = {
+      firstname: '',
+      email: '',
+      message: '',
+      select: '',
+      subscription: false,
+      gender: '',
+    }
+    this.firstNameRef = React.createRef();
+    this.emailRef = React.createRef();
   }
 
+  componentDidMount() {
+    this.firstNameRef.current.focus();
+  }
+  
+
+
   onHandleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value})
+    this.setState(()=> ({[e.target.name]: e.target.value}), ()=>{
+      if(this.state.firstname.length === 16){
+        console.log(`it is must be a focus`)
+        this.emailRef.current.focus();
+      }
+    })
   }
 
   onHandleCheckbox = (e) => {
@@ -34,8 +49,6 @@ class Form extends Component {
     {
       alert(`email is not valid. Try again please!`);
     }
-
-
   }
 
   render() {
@@ -44,6 +57,7 @@ class Form extends Component {
     return (
       <div>
       <input type='text'
+      ref={this.firstNameRef}
         name="firstname"
         placeholder="firstname"
         value={firstname}
@@ -52,10 +66,12 @@ class Form extends Component {
 
 <input type='email'
         name="email"
+        ref={this.emailRef}
         placeholder="email"
         value={email}
         onChange={this.onHandleChange}
-        onBlur = {this.validateEmail}/>
+        onBlur = {this.validateEmail}
+        />
         <br />
         <textarea name="message" value={message}
         onChange={this.onHandleChange}></textarea>
