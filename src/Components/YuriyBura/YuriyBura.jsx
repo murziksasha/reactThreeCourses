@@ -15,6 +15,8 @@ class YuriyBura extends Component {
 
   state = {
     data: [...todoData],
+    term: '',
+    filter: 'all', //all, active, done
   }
 
   _createToDoItem(label) {
@@ -74,23 +76,53 @@ class YuriyBura extends Component {
 
   }
 
-  
+  search = (items, term) => {
+    if(term.length === 0) {
+      return items;
+    }
+    return items.filter((item) => {
+      return item.label
+      .toLowerCase().indexOf(term.toLowerCase()) > -1;
+    });
+  }
+
+  onSearchChange = (term)=>{
+    this.setState({term});
+  }
+
+  onFilterChange = (filter)=>{
+    this.setState({filter});
+  }
+
+  filter = (items, filter)=>{
+    switch(filter){
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((item)=> !item.done);
+      case 'done':
+        return items.filter((item)=> item.done);
+      default: return items;
+    };
+  }
 
 render() {
-  const {data} = this.state;
+  const {data, term, filter} = this.state;
 
-
+  const visibleItems = this.filter(this.search(data, term), filter);
   const doneCount = data.filter((el)=> el.done).length;
   const toDoCount = data.length - doneCount;
 
   return (
     <div className='todo-app'>
     <AppHeader toDo={toDoCount} done={doneCount}/>
-    <ItemStatusFilter/>
-    <SearchPanel/>
+    <ItemStatusFilter 
+      filter = {filter}
+      onFilterChange = {this.onFilterChange}/>
+    <SearchPanel onSearchChange = {this.onSearchChange}/>
     <AddListItem
       onItemAdd = {this.onItemAdd}/>
-    <TodoList todos = {data}
+    <TodoList todos = {visibleItems}
               onDeleted={this.deleteItem}
               onToggleDone = {this.onToggleDone}
               onToggleImportant = {this.onToggleImportant}/>
