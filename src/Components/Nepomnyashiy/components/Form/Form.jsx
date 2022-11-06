@@ -38,11 +38,11 @@ class Form extends Component {
     this.setState({subscription: e.target.checked})
   }
 
-  validateName = () => {
-    if(this.state.firstname.length < 5) {
-      alert(`Your first name can't be less than 7 letters `);
-    }
-  }
+  // validateName = () => {
+  //   if(this.state.firstname.length < 5) {
+  //     alert(`Your first name can't be less than 7 letters `);
+  //   }
+  // }
 
   validateEmail = () => {
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email))
@@ -72,7 +72,7 @@ class Form extends Component {
         onChange={this.onHandleChange}
         onBlur = {this.validateEmail}
         />
-        <br />
+        <br /> <br /> <br />
         <textarea name="message" value={message}
         onChange={this.onHandleChange}></textarea>
         <br />

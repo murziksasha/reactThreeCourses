@@ -3,6 +3,8 @@ import { Component } from 'react';
 
 import './MyTaskForm.css'
 
+
+
 class MyTaskForm extends Component {
 
   state= {
@@ -23,7 +25,7 @@ class MyTaskForm extends Component {
   }
 
   validateHandle = () => {
-     const isValidateEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email);
+     const isValidateEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email.toLowerCase());
 
      const isValidateCheckbox = this.state.checkbox;
 
@@ -53,21 +55,24 @@ class MyTaskForm extends Component {
   render() {
     const {email, checkbox} = this.state;
     return(
-      <form className='myForm'
-      onSubmit={this.submit}>
-        <input type="email" placeholder='email' name='email' value={email}
-        onChange = {this.onHandleChange}/>
-        <br/>
-        <br/>
-        <label>
-          <input type="checkbox" checked = {checkbox}
-          onChange={this.onChangeCheckbox}/>
-          I agree with terms and conditions
-        </label>
-        <br/>
-        <button type='buton'
-        onClick={this.validateHandle}>SEND</button>
-      </form>
+      <div>
+        <form className='myForm'
+        onSubmit={this.submit}>
+          <input type="email" placeholder='email' name='email' value={email}
+          onChange = {this.onHandleChange}/>
+          <br/>
+          <br/>
+          <label>
+            <input type="checkbox" checked = {checkbox}
+            onChange={this.onChangeCheckbox}/>
+            I agree with terms and conditions
+          </label>
+          <br/>
+          <input type='button'
+          onClick={this.validateHandle} value="SEND"/>
+        </form>
+      </div>
+
     )
   }
 }

@@ -1,45 +1,99 @@
-import { Component } from 'react';
-
+import { Component, createContext } from 'react';
 import './mainMinin.css';
 
 import Car from './components/Car/Car';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import Counter from './components/Counter/Counter';
 
+export const ClickedContext = createContext(false);
 
 class Minin extends Component {
 
   state = {
     cars: [
-      {name: 'ford', year: '1944'},
-      {name: 'lance', year: '2002'}
+      {name: 'ford', year: 1944},
+      {name: 'lance', year: '2002'},
+      {name: 'mazda', year: 2022}
     ],
-    pageTitle: 'React Components'
-
+    pageTitle: 'React Components',
+    showCars: false,
+    clicked: false,
   };
 
-  onHandleTitle (newTitle){
+  onChangeName = (name, index) => {
+    const car = this.state.cars[index];
+    car.name = name;
+    const cars = [...this.state.cars];
+    cars[index] = car;
+    this.setState({cars});
+  }
+
+  toggleCars = () => {
     this.setState({
-      pageTitle: newTitle,
+      showCars: !this.state.showCars
     })
+  }
+
+  deleteHandler = (index) => {
+    const cars = this.state.cars.concat();
+    cars.splice(index, 1);
+    this.setState({cars});
+  }
+
+
+  isClicked = ()=>{
+    this.setState((prev)=>({
+      clicked: !prev.clicked
+      }));
   }
 
 
 
   render() {
-    const {cars, pageTitle} = this.state;
+    const {cars, pageTitle, showCars} = this.state;
     return(
     <div>
-      <h1>{pageTitle}</h1> <br /> <br />
-      <button onClick={this.onHandleTitle.bind(this, 'my main React title')}>Change Title</button>
+      <button type='button' onClick={this.toggleCars}>Show Cars</button>
+      <h1>{pageTitle}
+      <br />
+      {this.props.myTitle}
+      </h1>
       <br /><br /><br />
-      <Car 
-      name={cars[0].name} 
-      year = {cars[0].year}
-      handleClick = {this.onHandleTitle.bind(this, 'ford title')}/>
+
+      <div style={{
+        color: 'red',
+        padding: 20,
+        boxShadow: '0 4px 5px gray',
+        ':hover': {
+          cursor: 'pointer',
+          border: '1px solid #aaa',
+          boxShadow: '0 4px 15px 0 rgba(0, 0, 0, .25)',
+        }
+      }}>
+        { showCars ?
+          cars.map((item,i) => {
+            return (
+            <ErrorBoundary key= {i}>
+              <Car 
+                    index = {i}
+                    name={item.name}
+                    year = {item.year}
+                    onChangeName = {(e) => this.onChangeName(e.target.value, i)}
+                    onDelete = {this.deleteHandler.bind(this, i)}/>
+            </ErrorBoundary>
+            )
+          })
+          : ''
+        }
+      </div>
       <br /><br /><br />
-      <Car 
-      name={cars[1].name} 
-      year = {cars[1].year}
-      handleClick = {this.onHandleTitle.bind(this, 'lande car title')}/>
+
+      <button onClick={this.isClicked}>isClicked - CHANGE</button>
+
+        <ClickedContext.Provider value={this.state.clicked}>
+          <Counter />
+        </ClickedContext.Provider>
+
     </div>
     )
   }
