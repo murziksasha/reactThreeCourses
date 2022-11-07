@@ -1,0 +1,10 @@
+.layaout {
+  height: 100vh;
+  display: flex;
+  flex-flow: column wrap;
+  & main{
+    display: flex;
+    flex-flow: column wrap;
+    flex: 1 0 100%;
+  }
+}
