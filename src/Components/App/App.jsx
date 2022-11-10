@@ -6,6 +6,7 @@ import "./App.css";
 import Nepomnyashiy from "../Nepomnyashiy/mainNepmnyashiy"; 
 import MainPetrechenko from "../Petrechenko/mainPetrechenko";
 import YuriyBura from "../YuriyBura/YuriyBura";
+import YuriyBuraSWAPI from "../YuriyBuraSWAPI/YuriyBuraSWAPI";
 import Minin from "../MininVladilen/mainMinin";
 
 
@@ -24,7 +25,8 @@ function App() {
     // <Nepomnyashiy/>
     // <MainPetrechenko/>
     // <YuriyBura/>
-    <Minin myTitle="hello from APP"/>
+    <YuriyBuraSWAPI/>
+    // <Minin myTitle="hello from APP"/>
   )
 
 }
