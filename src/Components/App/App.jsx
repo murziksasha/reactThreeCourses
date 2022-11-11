@@ -23,9 +23,9 @@ function App() {
   return (
 
     // <Nepomnyashiy/>
-    // <MainPetrechenko/>
+    <MainPetrechenko/>
     // <YuriyBura/>
-    <YuriyBuraSWAPI/>
+    // <YuriyBuraSWAPI/>
     // <Minin myTitle="hello from APP"/>
   )
 
