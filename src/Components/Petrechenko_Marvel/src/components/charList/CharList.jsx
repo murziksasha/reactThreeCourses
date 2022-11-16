@@ -1,7 +1,6 @@
 import { Component } from 'react';
 
 import './charList.scss';
-import abyss from '../../resources/img/abyss.jpg';
 
 import Spinner from '../spinner/Spinner';
 import ErroMessage from '../errorMessage/ErrorMessage';
@@ -40,11 +39,35 @@ class CharList extends Component {
         })
     }
 
+    renderItems(arr) {
+        return (
+            arr.map((arr) => {
+                const {name,  thumbnail, id} = arr;
+                let string= thumbnail.lastIndexOf('.jpg') - 19 ;
+                return (
+                        <li key={id}
+                            className="char__item"
+                            onClick={()=>this.props.onCharSelected(id)}>
+                            <img src={thumbnail} 
+                                style={
+                                    thumbnail.slice(string) === 'image_not_available.jpg' ? {objectFit: 'contain'} : {objectFit: 'cover'}
+                                }
+                                alt={name}
+                            />
+                            <div className="char__name">{name}</div>
+                        </li>    
+                )
+            })
+        )
+    
+    
+    }
+
     render() {
         const {char, loading, error} = this.state;
         const errorMessage = error ? <ErroMessage/> : null;
         const loadingSpinner = loading ? <Spinner/> : null;
-        const content = !(loading || error) ? <View char={char}/> : null;
+        const content = !(loading || error) ? this.renderItems(char) : null;
 
         return (
             <div className="char__list">
@@ -62,27 +85,6 @@ class CharList extends Component {
 
 }
 
-const View = ({char}) => {
-    return (
-        char.map((arr, i) => {
-            const {name,  thumbnail} = arr;
-            let string= thumbnail.lastIndexOf('.jpg') - 19 ;
-            return (
-                    <li key={i}
-                        className="char__item">
-                        <img src={thumbnail} 
-                            style={
-                                thumbnail.slice(string) === 'image_not_available.jpg' ? {objectFit: 'contain'} : {objectFit: 'cover'}
-                            }
-                            alt="character"
-                        />
-                        <div className="char__name">{name}</div>
-                    </li>    
-            )
-        })
-    )
 
-
-}
 
 export default CharList;

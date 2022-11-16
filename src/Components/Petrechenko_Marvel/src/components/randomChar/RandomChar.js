@@ -3,7 +3,7 @@ import {Component} from 'react';
 import './randomChar.scss';
 import mjolnir from '../../resources/img/mjolnir.png';
 import Spinner from '../spinner/Spinner';
-import ErroMessage from '../errorMessage/ErrorMessage';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 import MarvelService from '../../services/MarvelService';
 
 
@@ -46,7 +46,7 @@ class RandomChar extends Component {
 
     render() {
         const {char, loading, error} = this.state;
-        const errorMessage = error ? <ErroMessage/> : null;
+        const errorMessage = error ? <ErrorMessage/> : null;
         const loadingSpinner = loading ? <Spinner/> : null;
         const content = !(loading || error) ? <View char={char}/> : null;
         return (
@@ -74,13 +74,12 @@ class RandomChar extends Component {
 }
 
 const conditionOfDescrChar = (description) => {
-    description = !description ? 'There is not describe for this character ': description;
+    description = !description ? 'There is no describe for this character ': description;
     if(description.length > 180){
         description = description.slice(0, 180) + ' ...';
     }
     return description;
 }
-//'image_not_available'
 
 
 
