@@ -12,25 +12,50 @@ class CharList extends Component {
         char: [],
         loading: true,
         error: false,
+        newItemLoading: false,
+        offset: 1530,
+        charEnded: false,
+
     }
 
     marverService = new MarvelService();
 
     componentDidMount(){
-        this.updateChar();
+        this.onRequest();
     }
 
-    onCharLoaded = (char) => {
-        this.setState({char, loading: false});
-    }
-
-    updateChar = () => {
-        this.setState({loading: true});
+    onRequest = (offset) => {
+        this.onCharListLoading();
         this.marverService
-        .getAllCharacters()
+        .getAllCharacters(offset)
         .then(this.onCharLoaded)
         .catch(this.onError)
     }
+
+    onCharLoaded = (newCharList) => {
+
+        let ended = false;
+        if(newCharList.length < 9) {
+            ended = true;
+        }
+
+
+        this.setState(({offset, char})=>(
+            {
+                char: [...char, ...newCharList],
+                loading: false,
+                newItemLoading: false,
+                offset: offset + 9,
+                charEnded: ended,
+        }));
+    }
+
+    onCharListLoading(){
+        this.setState({newItemLoading: true})
+    }
+
+
+
 
     onError = () => {
         this.setState({
@@ -40,12 +65,12 @@ class CharList extends Component {
     }
 
     renderItems(arr) {
-        return (
-            arr.map((arr) => {
+
+            const items = arr.map((arr, i) => {
                 const {name,  thumbnail, id} = arr;
                 let string= thumbnail.lastIndexOf('.jpg') - 19 ;
                 return (
-                        <li key={id}
+                        <li key={i}
                             className="char__item"
                             onClick={()=>this.props.onCharSelected(id)}>
                             <img src={thumbnail} 
@@ -58,25 +83,34 @@ class CharList extends Component {
                         </li>    
                 )
             })
+            return (
+                <ul className="char__grid">
+                    {items}
+                </ul>
         )
     
     
     }
 
     render() {
-        const {char, loading, error} = this.state;
+        const {char, loading, error, offset, newItemLoading, charEnded} = this.state;
+        const items = this.renderItems(char);
         const errorMessage = error ? <ErroMessage/> : null;
         const loadingSpinner = loading ? <Spinner/> : null;
-        const content = !(loading || error) ? this.renderItems(char) : null;
+        const content = !(loading || error) ? items : null;
 
         return (
             <div className="char__list">
-                <ul className="char__grid">
+                
                     {loadingSpinner}
                     {errorMessage}
                     {content}
-                </ul>
-                <button className="button button__main button__long">
+                
+                <button className="button button__main button__long"
+                        onClick={() => this.onRequest(offset)}
+                        disabled={newItemLoading}
+                        style={{'display': charEnded ? 'none' : 'block'}}
+                        >
                     <div className="inner">load more</div>
                 </button>
             </div>
