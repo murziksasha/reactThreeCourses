@@ -13,12 +13,29 @@ export default class RandomPlanet extends Component {
 
   constructor() {
     super();
+    console.log('CONSTRUCTOR');
     this.state = {
       planet: {},
       loading: true,
       error: false,
+      toggle: true,
     }
+
+  }
+
+  componentDidMount() {
+    console.log('didMounted')
     this.updatePlanet();
+    this.interval = setInterval(this.updatePlanet, 20000);
+  }
+
+  componentDidUpdate() {
+    console.log('Didupdated');
+  }
+
+  componentWillUnmount() {
+    console.log(`UNMOUNT`);
+    clearInterval(this.interval);
   }
 
   onPlanetLoaded = (planet) => {
@@ -35,24 +52,35 @@ export default class RandomPlanet extends Component {
     })
   }
 
-  updatePlanet() {
-    const id = Math.floor(Math.random()*25)+2;
+  updatePlanet = ()=> {
+    console.log('update planet');
+    const id = Math.floor(Math.random()*25)+3;
     this.swapiService.getPlanet(id)
     .then(this.onPlanetLoaded)
     .catch(this.onError);
   }
 
+  handleToggle = () => {
+    this.setState(({toggle}) => ({
+      toggle: !toggle,
+    }))
+  }
+
   render() {
-    const {planet, loading, error} = this.state;
+    console.log(`RENDER`);
+    const {planet, loading, error, toggle} = this.state;
 
     const hasData = !(loading || error);
 
     const spinner = loading ? <Spinner/> : null;
-    const content = hasData ? <PlanetView planet={planet}/> : null;
+    const content = hasData && toggle ? <PlanetView planet={planet}/> : null;
     const errorBlock = error ? <ErrorIndicator/> : null;
 
     return(
       <div className="Random-planet jumbotron rounded">
+        <button className='btn btn-danger'
+        onClick={this.handleToggle}
+        >TOGGLE planet</button>
         {spinner}
         {content}
         {errorBlock}

@@ -1,30 +1,87 @@
 import { Component } from 'react';
 import './PersonDetails.scss';
 
+import SwapiServices from '../../services/SwapiServices/SwapiServices';
+import Spinner from '../spinner/Spinner';
+
 export default class PersonDetails extends Component {
+
+  swapiService = new SwapiServices();
+
+  state = {
+    person: null,
+  }
+
+  componentDidMount() {
+    this.updatePerson();
+  }
+
+  componentDidUpdate(prevProps) {
+    if(this.props.personId !== prevProps.personId){
+      this.updatePerson();
+    }
+  }
+
+  updatePerson() {
+    this.setState({
+      person: null,
+    })
+    const {personId} = this.props;
+    if(!personId) {
+      return;
+    }
+
+    this.swapiService
+    .getPerson(personId)
+    .then((person) => {
+      this.setState({person});
+    })
+  }
+
   render() {
+
+    if(!this.state.person) {
+      return (
+        <>
+        <h3>Please select the character</h3>
+          <Spinner/>
+        </>
+      )
+    }
+
+    const {person: {
+      id, name, gender, birthYear, eyeColor
+    } } = this.state;
     return (
       <div className='PersonDetails card'>
-        <img src="https://starwars-visualguide.com/assets/img/" alt="" className="person-image" />
-
-        <div className="card-body">
-          <h4>R2-D2</h4>
-          <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-              <span className="term">Gender</span>
-              <span>male</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Birth Year</span>
-              <span>43</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Eye Color</span>
-              <span>red</span>
-            </li>
-          </ul>
-        </div>
+        {personalInfo(id, name, gender, birthYear, eyeColor)}
       </div>
     )
   }
+}
+
+const personalInfo = (id, name, gender, birthYear, eyeColor) => {
+  return (
+    <>
+      <img src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} alt={name} className="person-image" />
+
+      <div className="card-body">
+        <h4>{name}</h4>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">
+            <span className="term">Gender</span>
+            <span>{gender}</span>
+          </li>
+          <li className="list-group-item">
+            <span className="term">Birth Year</span>
+            <span>{birthYear}</span>
+          </li>
+          <li className="list-group-item">
+            <span className="term">Eye Color</span>
+            <span>{eyeColor}</span>
+          </li>
+        </ul>
+      </div>
+    </>
+  )
 }

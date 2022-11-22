@@ -1,24 +1,34 @@
+import { Component } from 'react';
+
 import './App.scss';
 
 import RandomPlanet from '../random-planet/RandomPlanet';
 import Header from '../header/Header';
 import ItemList from '../item-list/ItemList';
 import PersonDetails from '../person-details/PersonDetails';
+import PeoplePage from '../people-page/PeoplePage';
 
-export default function App(){
-  return (
-    <div>
-      <Header/>
-      <RandomPlanet/>
+class App extends Component{
 
-      <div className="row mb2">
-        <div className="col-md-6">
-          <ItemList/>
-        </div>
-        <div className="col-md-6">
-          <PersonDetails/>
-        </div>
+
+  onPersonSelected = (id) => {
+    this.setState({
+      selectedPerson: id,
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <Header/>
+        <RandomPlanet/>
+        <PeoplePage/>
+        <PeoplePage/>
+        <PeoplePage/>
       </div>
-    </div>
-  )
+    )
+  }
 }
+
+export default App;
+
