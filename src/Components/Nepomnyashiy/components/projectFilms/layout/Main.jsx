@@ -11,13 +11,13 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 export default class Main extends Component {
   state = {
     movies: [],
-    search: "rise",
+    search: "woman",
     loading: true,
   };
 
   componentDidMount() {
     fetch(
-      `https://www.omdbapi.com/?i=tt3896198&apikey=81d20d2e&s=${this.state.search}`
+      `https://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=${this.state.search}`
     )
       .then((response) => response.json())
       .then((data) => this.setState({ movies: data.Search, loading: false }))
