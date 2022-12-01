@@ -16,14 +16,15 @@ function Nepomnyashiy() {
 const [isClicker, setClicker] = useState(false);
     return(
     <div >
-      {/* <Header/>
+      <Header/>
       <Main/>
       <Footer/> 
 
       <Form/>
       <MyTaskForm/>
-      */}
+
       <Timer/>
+     
     </div>
     )
 }

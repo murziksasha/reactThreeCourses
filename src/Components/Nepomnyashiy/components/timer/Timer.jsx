@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from 'react';
 
 function setDefaultValue() {
   const userCount = localStorage.getItem('count');
@@ -8,44 +8,45 @@ function setDefaultValue() {
 function Timer() {
   let [count, setCount] = useState(setDefaultValue());
   const [isCounting, setIsCounting] = useState(false);
+
   const timerIdRef = useRef(null);
 
   const handleStart = () => {
     setIsCounting(true);
     timerIdRef.current = setInterval(() => {
       setCount(count => count + 1);
-    }, 1000)
-  }
+    }, 1000);
+  };
 
-  const handleStop = () =>  {
+  const handleStop = () => {
     clearInterval(timerIdRef.current);
     setIsCounting(false);
-  }
+  };
 
-  const handleReset = () =>  {
+  const handleReset = () => {
     setCount(0);
     setIsCounting(false);
-  }
+  };
 
-  useEffect(()=> {
-    
+  useEffect(() => {
     localStorage.setItem('count', count);
-  }, [count])
+    return () => {
+      clearInterval(timerIdRef.current);
+    }
+  }, [count]);
 
   return (
     <div className="Nepomnyashiy">
       <h1>React Number</h1>
       <h3>{count}</h3>
-      {
-        !isCounting ? (
-          <button onClick={handleStart}>Start</button>
-        ) : (
-          <button onClick={handleStop}>Stop</button>
-        )
-      }
+      {!isCounting ? (
+        <button onClick={handleStart}>Start</button>
+      ) : (
+        <button onClick={handleStop}>Stop</button>
+      )}
       <button onClick={handleReset}>Reset</button>
     </div>
-  )
+  );
 }
 
 export default Timer;
