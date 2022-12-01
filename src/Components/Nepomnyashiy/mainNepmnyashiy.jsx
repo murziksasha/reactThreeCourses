@@ -1,6 +1,9 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 
 import './mainNepomnyashiy.css';
+
+import Timer from './components/timer/Timer';
+
 
 import Form from './components/Form/Form';
 import MyTaskForm from './components/myTaskForm/MyTaskForm';
@@ -8,23 +11,21 @@ import Header from './components/projectFilms/layout/Header';
 import Main from './components/projectFilms/layout/Main';
 import Footer from './components/projectFilms/layout/Footer';
 
-class Nepomnyashiy extends Component{
+function Nepomnyashiy() {
 
-
-
-  render() {
+const [isClicker, setClicker] = useState(false);
     return(
-    <>
-      <Header/>
+    <div >
+      {/* <Header/>
       <Main/>
-      <Footer/>
+      <Footer/> 
 
-      {/* <Form/> */}
-      {/* <MyTaskForm/> */}
-    </>
+      <Form/>
+      <MyTaskForm/>
+      */}
+      <Timer/>
+    </div>
     )
-
-  }
 }
 
 export default Nepomnyashiy;
