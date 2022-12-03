@@ -5,6 +5,8 @@ import  ReactDOM from 'react-dom';
 import './mainPetrechenko.css';
 import App from './components/app/app';
 
+import HooksLearining from './hookslearning/src/HooksLearining';
+
 
 
 const Message = (props) => {
@@ -121,6 +123,10 @@ function MainPetrechenko () {
 
   return (
     <div>
+
+    <HooksLearining/>
+
+
   <Counter render = {counter => (
     <Message counter = {counter}/>
 )}
@@ -132,10 +138,15 @@ function MainPetrechenko () {
   
 />
       <Form/>
+
+
+      <App/>
+
+
     </div>
 
 
-    // <App/>
+
   )
 }
 

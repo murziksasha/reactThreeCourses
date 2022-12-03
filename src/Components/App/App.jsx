@@ -24,11 +24,11 @@ function App() {
   return (
 
     // <Nepomnyashiy/>
-    // <MainPetrechenko/>
+    <MainPetrechenko/>
     // <Petrechenko_Marvel/>
     // <YuriyBura/>
     // <YuriyBuraSWAPI/>
-    <Minin myTitle="hello from APP"/>
+    // <Minin myTitle="hello from APP"/>
   )
 
 }
