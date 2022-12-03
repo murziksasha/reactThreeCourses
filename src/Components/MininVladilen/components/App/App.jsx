@@ -1,5 +1,5 @@
 import { Component, createContext } from "react";
-import { Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import Quiz from "../practice_project/components/containers/Quiz/Quiz";
 
@@ -79,7 +79,9 @@ class Minin extends Component {
           <br />
           <hr />
           <br />
-          <Route exact path='/' render={()=> <h1>Home Page</h1>}/>
+          <Routes>
+            <Route exact path='/' render={()=> <h1>Home Page</h1>}/>
+          </Routes>
         </nav>
         <hr /><br />
         <div
