@@ -11,7 +11,7 @@ const CharList = (props) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [newItemLoading, setNewItemLoading] = useState(false);
-    const [offset, setOffset] = useState(1530);
+    const [offset, setOffset] = useState(210);
     const [charEnded, setCharEnded] = useState(false);
 
 
@@ -45,15 +45,10 @@ const CharList = (props) => {
         setNewItemLoading(true);
     }
 
-
-
-
     const onError = () => {
         setError(true);
         setLoading(false);
     }
-
-
 
     const itemRefs = useRef([]);
 
@@ -69,11 +64,11 @@ const CharList = (props) => {
             const {name,  thumbnail, id} = arr;
             let string= thumbnail.lastIndexOf('.jpg') - 19 ;
             return (
-                    <li key={id}
+                    <li key={i}
                         className="char__item"
                         onClick={()=>{
                             props.onCharSelected(id);
-                            focusOnItem(i);
+                            // focusOnItem(i);
                         }}
                         ref={el => itemRefs.current[i] = el}>
                         <img src={thumbnail} 
