@@ -28,7 +28,7 @@ function App() {
 
     // <Nepomnyashiy/>
     // <MainPetrechenko/>
-    // <Petrechenko_Marvel/>
+    <Petrechenko_Marvel/>
     // <YuriyBura/>
     // <YuriyBuraSWAPI/>
     // <Minin myTitle="hello from APP"/>
