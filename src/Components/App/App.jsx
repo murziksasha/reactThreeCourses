@@ -9,6 +9,7 @@ import Petrechenko_Marvel from "../Petrechenko_Marvel/src/Petrechenko_Marvel";
 import YuriyBura from "../YuriyBura/YuriyBura";
 import YuriyBuraSWAPI from "../YuriyBuraSWAPI/YuriyBuraSWAPI";
 import Minin from "../MininVladilen/mainMinin";
+import Experiments from '../Experiments/Experiments';
 
 
 
@@ -22,6 +23,8 @@ import Minin from "../MininVladilen/mainMinin";
 function App() {
 
   return (
+
+    <Experiments/>
 
     // <Nepomnyashiy/>
     // <MainPetrechenko/>
