@@ -2,6 +2,7 @@ import { Component, createContext } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Quiz from "../practice_project/components/containers/Quiz/Quiz";
+import HooksPractice from "../hooksPractice/HooksPractice";
 
 
 import Main_practice from "../practice_project/Main_practice";
@@ -58,7 +59,7 @@ class Minin extends Component {
           <Layaout>
             <Quiz/>
           </Layaout>
-        </div> */}
+        </div> 
 
         <button type="button" onClick={this.toggleCars}>
           Show Cars
@@ -115,9 +116,9 @@ class Minin extends Component {
               })
             : ""}
         </div>
-        <br />
-        <br />
-        <br />
+        */}
+
+        <HooksPractice/>
 
       </div>
     );
