@@ -5,6 +5,11 @@ import HookUseContext from './HookuseContext/HookUseContext';
 import Alert from './HookuseContext/Alert';
 import AlertProvider from './HookuseContext/AlertContext';
 
+//nepomyashiy example useHookBasic
+import useContextBasic from './useContextBasic/useContextBasic';
+import Books from './useContextBasic/Books/Books';
+
+
 
 
 function complexCompute(num){
@@ -67,7 +72,14 @@ function HooksPractice(props) {
   const computed = useMemo(()=>complexCompute(number),[number]) ;
 
   return (
-    <div className='container'>
+    <div className='container pt-5'>
+
+    {/* nepomnyashiy hooks example:  */}
+    <useContextBasic>
+      <Books/>
+    </useContextBasic>
+
+    <br /><br /><br /> <hr />
 
     <AlertProvider>
       <Alert/>

@@ -7,6 +7,41 @@ import SwapiServices from '../../services/SwapiServices/SwapiServices';
 
 import './peoplePage.scss';
 
+const Row = ({left, right}) => {
+  return (
+    <div className="row mb2">
+      <div className="col-md-6">
+        {left}
+      </div>
+      <div className="col-md-6">
+        {right}
+      </div>
+    </div>
+  )
+}
+
+class ErrorBoundry extends Component{
+  state = {
+    hasError: false,
+  }
+
+  componentDidCatch = () => {
+    this.setState({
+      hasError: true,
+    })
+  }
+
+  render(){
+    if(this.state.hasError){
+      return `Some thing wrong!!!...`;
+    }
+    return(
+
+      this.props.children
+    )
+  }
+}
+
 class PeoplePage extends Component {
 
   swapiService = new SwapiServices();
@@ -22,52 +57,50 @@ class PeoplePage extends Component {
     })
   }
 
-  componentDidCatch = () => {
-    this.setState({
-      hasError: true,
-    })
-  }
+
+
+  itemList = (
+    <ItemList onItemSelected = {this.onPersonSelected}
+    getData={this.swapiService.getAllPeople}>
+    {(i)=> `${i.name}, ${i.birthYear})` }
+    </ItemList>
+  );
 
   render() {
     if(this.state.hasError) {return <ErrorIndicator/>}
     return (
-      <div>
-        <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList onItemSelected = {this.onPersonSelected}
-            getData={this.swapiService.getAllPeople}
-            renderItem={({name, gender, birthYear})=> `${name} (${gender}, ${birthYear})` }
-            />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails personId = {this.state.selectedItem}/>
-          </div>
-        </div>
+      <ErrorBoundry>
+        <Row left={
+        <ItemList onItemSelected = {this.onPersonSelected}
+        getData={this.swapiService.getAllPlanets}/>
+        } right={<ItemList onItemSelected = {this.onPersonSelected}
+        getData={this.swapiService.getAllStarships}
+        />} />
+      </ErrorBoundry>
+      // <div>
+      //       {this.itemList}
+      //     </div>
+      //     <div className="col-md-6">
+      //       <PersonDetails personId = {this.state.selectedItem}/>
+      //     </div>
+      //   </div>
 
-        <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList onItemSelected = {this.onPersonSelected}
-            getData={this.swapiService.getAllPlanets}
-            renderItem={(item)=> item.name }
-            />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails personId = {this.state.selectedItem}/>
-          </div>
-        </div>
+      //   <div className="row mb2">
+      //     <div className="col-md-6">
 
-        <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList onItemSelected = {this.onPersonSelected}
-            getData={this.swapiService.getAllStarships}
-            renderItem={(item)=> item.name }
-            />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails personId = {this.state.selectedItem}/>
-          </div>
-        </div>
-      </div>
+      //     </div>
+      //     <div className="col-md-6">
+      //       <PersonDetails personId = {this.state.selectedItem}/>
+      //     </div>
+      //   </div>
+
+      //   <div className="row mb2">
+      //     <div className="col-md-6">
+
+      //     </div>
+      //     <div className="col-md-6">
+      //       <PersonDetails personId = {this.state.selectedItem}/>
+      // </div>
     );
   }
 }
