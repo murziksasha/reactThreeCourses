@@ -9,6 +9,9 @@ import todoData from './data/todoData';
 import ItemStatusFilter from './components/ItemStatusFilter/ItemStatusFilter';
 import AddListItem from './components/addListItem/addListItem';
 
+import HookUseState from './learningHooks/HookUseState';
+import HookUseEffect from './learningHooks/HookUseEffect';
+
 
 class YuriyBura extends Component {
   _partTwoId = 100;
@@ -115,19 +118,22 @@ render() {
 
   return (
     <div className='todo-app'>
-    <AppHeader toDo={toDoCount} done={doneCount}/>
-    <ItemStatusFilter 
-      filter = {filter}
-      onFilterChange = {this.onFilterChange}/>
-    <SearchPanel onSearchChange = {this.onSearchChange}/>
-    <AddListItem
-      onItemAdd = {this.onItemAdd}/>
-    <TodoList todos = {visibleItems}
-              onDeleted={this.deleteItem}
-              onToggleDone = {this.onToggleDone}
-              onToggleImportant = {this.onToggleImportant}/>
+      <HookUseEffect/>
+      <HookUseState/>
+      <br /><br /><br /><br />
+      <AppHeader toDo={toDoCount} done={doneCount}/>
+      <ItemStatusFilter 
+        filter = {filter}
+        onFilterChange = {this.onFilterChange}/>
+      <SearchPanel onSearchChange = {this.onSearchChange}/>
+      <AddListItem
+        onItemAdd = {this.onItemAdd}/>
+      <TodoList todos = {visibleItems}
+                onDeleted={this.deleteItem}
+                onToggleDone = {this.onToggleDone}
+                onToggleImportant = {this.onToggleImportant}/>
 
-  </div>
+    </div>
   )
 }
 

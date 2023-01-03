@@ -4,6 +4,7 @@ import React, {Component} from "react";
 
 import "./App.css";
 import Nepomnyashiy from "../Nepomnyashiy/mainNepmnyashiy"; 
+import Nepmnyashiy_Vitrina from "../Nepomnyashiy_Vitrina/Nepmnyashiy_Vitrina";
 import MainPetrechenko from "../Petrechenko/mainPetrechenko";
 import Petrechenko_Marvel from "../Petrechenko_Marvel/src/Petrechenko_Marvel";
 import YuriyBura from "../YuriyBura/YuriyBura";
@@ -26,11 +27,12 @@ function App() {
 
     // <Experiments/>
 
-    // <Nepomnyashiy/>
+    // <Nepomnyashiy
+    // <Nepmnyashiy_Vitrina/>
     // <MainPetrechenko/>
-    // <Petrechenko_Marvel/>
+    <Petrechenko_Marvel/>
     // <YuriyBura/>
-    <YuriyBuraSWAPI/>
+    // <YuriyBuraSWAPI/>
     // <Minin myTitle="hello from APP"/>
   )
 

@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import './PersonDetails.scss';
 
+import { SwapiServiceConsumer } from '../swapi-service-context/swapi-service-context';
+
 import SwapiServices from '../../services/SwapiServices/SwapiServices';
 import Spinner from '../spinner/Spinner';
 
@@ -54,7 +56,15 @@ export default class PersonDetails extends Component {
     } } = this.state;
     return (
       <div className='PersonDetails card'>
-        {personalInfo(id, name, gender, birthYear, eyeColor)}
+        <SwapiServiceConsumer>
+          {
+            (swapiService) => {
+              return  (
+                personalInfo(id, name, gender, birthYear, eyeColor)
+              )
+            }
+          }
+        </SwapiServiceConsumer>
       </div>
     )
   }

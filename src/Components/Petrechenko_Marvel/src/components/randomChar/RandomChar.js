@@ -4,46 +4,38 @@ import './randomChar.scss';
 import mjolnir from '../../resources/img/mjolnir.png';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 
 
 const RandomChar = () => {
 
-    const [char, setChar] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const [char, setChar] = useState(null);
 
-
-
-    const marverService = new MarvelService();
+    const {loading, error, getCharacter, clearError} = useMarvelService();
 
     useEffect(()=>{
         updateChar();
+        const timerId = setInterval(updateChar, 60000);
+
+        return ()=>{
+            clearInterval(timerId);
+        }
     }, [])
 
     const onCharLoaded = (char) => {
         setChar(char);
-        setLoading(false);
     }
 
     const updateChar = () => {
-        setLoading(true);
+        clearError();
         const id = Math.floor(Math.random() * (1011200 - 1011000) + 1011000);
-        marverService
-        .getCharacter(id)
-        .then(onCharLoaded)
-        .catch(onError)
-    }
-
-    const onError = () => {
-        setLoading(false);
-        setError(true);
-
+        getCharacter(id)
+        .then(onCharLoaded);
     }
 
     const errorMessage = error ? <ErrorMessage/> : null;
     const loadingSpinner = loading ? <Spinner/> : null;
-    const content = !(loading || error) ? <View char={char}/> : null;
+    const content = !(loading || error || !char) ? <View char={char}/> : null;
     return (
         <div className="randomchar">
             {loadingSpinner}
@@ -79,7 +71,7 @@ const conditionOfDescrChar = (description) => {
 
 const View = ({char}) => {
     const {name, description, thumbnail, homepage, wiki} = char;
-    let string= thumbnail.lastIndexOf('.jpg') - 19 ;
+    let string = thumbnail.lastIndexOf('.jpg') - 19 ;
     return (
     <div className="randomchar__block">
         <img src={thumbnail} 

@@ -7,6 +7,11 @@ import Header from '../header/Header';
 import ItemList from '../item-list/ItemList';
 import PersonDetails from '../person-details/PersonDetails';
 import PeoplePage from '../people-page/PeoplePage';
+import SwapiServices from '../../services/SwapiServices/SwapiServices';
+
+import { SwapiServiceProvider } from '../swapi-service-context/swapi-service-context';
+
+const swapiService = new SwapiServices();
 
 class App extends Component{
 
@@ -20,9 +25,11 @@ class App extends Component{
   render() {
     return (
       <div>
-        <Header/>
-        <RandomPlanet/>
-        <PeoplePage/>
+        <SwapiServiceProvider value={this.swapiService}>
+          <Header/>
+          <RandomPlanet/>
+          <PeoplePage/>
+        </SwapiServiceProvider>
       </div>
     )
   }
